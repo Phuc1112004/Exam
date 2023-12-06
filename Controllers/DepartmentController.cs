@@ -17,6 +17,6 @@ namespace Exam.Controllers
         {
             var departments = _departmentService.GetAllDepartments();
             return View(departments);
-        }
+        } 
     }
 }
