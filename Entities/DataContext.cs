@@ -5,17 +5,22 @@ namespace Exam.Entities
 {
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options)
-        : base(options)
+        public DataContext()
         {
         }
-
+        public DataContext(DbContextOptions options) : base(options)
+        {
+        }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            // Add any additional configuration here
+            if (!options.IsConfigured)
+            {
+                options.UseSqlServer("A FALLBACK CONNECTION STRING");
+            }
         }
+
     }
 }
