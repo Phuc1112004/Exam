@@ -13,17 +13,22 @@ namespace Exam.Controllers
         {
             _context = context;
         }
-        // GET: DepartmentController1
+
         public ActionResult Index()
         {
-            List<Department> ls = _context.Departments.ToList();
-            return View(ls);
+            try
+            {
+                List<Department> ls = _context.Departments.ToList();
+                return View(ls);
+            }
+            catch (Exception ex)
+            {
+                // In thông điệp lỗi để xem chi tiết lỗi là gì.
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
 
-        // GET: DepartmentController1/Details/5
-
-
-        // GET: DepartmentController1/Create
         public ActionResult Create()
         {
             return View();
@@ -34,7 +39,7 @@ namespace Exam.Controllers
             if (ModelState.IsValid)
             {
 
-                // save to db
+                
                 _context.Departments.Add(new Department
                 {
                     Name = model.Name,
@@ -43,7 +48,7 @@ namespace Exam.Controllers
                 });
                 _context.SaveChanges();
 
-                // redirect to list
+                
                 return RedirectToAction("Index");
             }
             return View(model);

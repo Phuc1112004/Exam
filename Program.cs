@@ -1,4 +1,7 @@
+using Exam.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
 namespace Exam
 {
     public class Program
@@ -9,11 +12,12 @@ namespace Exam
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
-            string connectionString = builder.Configuration.GetConnectionString("Dev");
+                
+            string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<Exam.Entities.DataContext>(
                 options => options.UseSqlServer(connectionString)
              );
+
 
             var app = builder.Build();
 
@@ -21,7 +25,7 @@ namespace Exam
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                
                 app.UseHsts();
             }
 
